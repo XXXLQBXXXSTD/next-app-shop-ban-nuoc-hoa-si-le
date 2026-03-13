@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Playfair_Display, Inter } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Perfume Shop - Nước hoa chính hãng giá tốt",
-  description: "Chuyên cung cấp nước hoa chính hãng, bán lẻ và bán sỉ giá tốt nhất",
+  title: "LUXE SCENT - Nước Hoa Cao Cấp | Hương Thơm Vĩnh Cửu",
+  description: "Thương hiệu nước hoa cao cấp Việt Nam. Bán lẻ & sỉ với giá tốt nhất. Hương thơm sang trọng, lưu hương lâu.",
 };
 
 export default function RootLayout({
@@ -24,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="vi" suppressHydrationWarning>
+      <body className={`${playfair.variable} ${inter.variable}`} suppressHydrationWarning>
         {children}
       </body>
     </html>
