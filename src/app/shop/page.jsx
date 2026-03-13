@@ -1,18 +1,15 @@
 "use client"
 import { useState } from "react";
+import { useCart } from "@/context/CartContext";
 import LuxuryHeader from "@/component/LuxuryHeader";
 import LuxuryFooter from "@/component/LuxuryFooter";
 import ProductItem from "@/component/ProductItem";
 
 export default function ShopPage() {
-  const [cartCount, setCartCount] = useState(0);
+  const { addToCart } = useCart();
   const [isWholesale, setIsWholesale] = useState(false);
   const [selectedGender, setSelectedGender] = useState("NỮ");
   const [sortBy, setSortBy] = useState("newest");
-
-  const handleAddToCart = () => {
-    setCartCount(cartCount + 1);
-  }
 
   const products = [
     {
@@ -114,7 +111,7 @@ export default function ShopPage() {
 
   return (
     <>
-      <LuxuryHeader cartCount={cartCount} />
+      <LuxuryHeader />
       
       <main style={{maxWidth: '1400px', margin: '0 auto', padding: '40px 20px'}}>
         {/* Hero & Breadcrumb */}
@@ -375,6 +372,7 @@ export default function ShopPage() {
               {products.map((product) => (
                 <div key={product.id} className="col-sm-6 col-lg-4">
                   <ProductItem
+                    id={product.id}
                     name={product.name}
                     price={isWholesale ? product.wholesalePrice : product.price}
                     brand={product.brand}
@@ -382,7 +380,14 @@ export default function ShopPage() {
                     volume={product.volume}
                     image={product.image}
                     badge={product.badge}
-                    onAdd={handleAddToCart}
+                    onAdd={() => addToCart({
+                      id: product.id,
+                      name: product.name,
+                      price: isWholesale ? product.wholesalePrice : product.price,
+                      brand: product.brand,
+                      volume: product.volume,
+                      image: product.image
+                    })}
                   />
                 </div>
               ))}

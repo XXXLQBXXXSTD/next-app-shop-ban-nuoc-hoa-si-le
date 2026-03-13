@@ -156,7 +156,7 @@ export default function LuxuryFooter() {
                     <div className="row align-items-center">
                         <div className="col-md-6 text-center text-md-start">
                             <small style={{color: 'rgba(255,255,255,0.6)'}}>
-                                © 2024 LUXE SCENT. All rights reserved.
+                                © 2026 LUXE SCENT. All rights reserved.
                             </small>
                         </div>
                         <div className="col-md-6 text-center text-md-end">

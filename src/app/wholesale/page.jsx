@@ -19,7 +19,7 @@ export default function WholesalePage() {
 
   return (
     <>
-      <LuxuryHeader cartCount={0} />
+      <LuxuryHeader />
       
       <main>
         {/* Hero Section */}

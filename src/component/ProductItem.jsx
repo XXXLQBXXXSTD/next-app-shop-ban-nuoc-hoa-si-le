@@ -1,5 +1,15 @@
-export default function ProductItem ({name, price, onAdd, image, brand, discount, volume, badge}) {
+"use client"
+import { useCart } from '@/context/CartContext';
+
+export default function ProductItem ({name, price, onAdd, image, brand, discount, volume, badge, id}) {
+    const { addToWishlist, isInWishlist } = useCart();
     const finalPrice = discount ? price * (1 - discount / 100) : price;
+    const inWishlist = isInWishlist(id);
+    
+    const handleWishlistClick = (e) => {
+        e.stopPropagation();
+        addToWishlist({ id, name, price, image, brand, volume, discount, badge });
+    };
     
     return(
         <div className="card h-100 hover-scale" style={{
@@ -84,21 +94,23 @@ export default function ProductItem ({name, price, onAdd, image, brand, discount
                 )}
                 
                 <button 
+                    onClick={handleWishlistClick}
                     className="position-absolute"
                     style={{
                         top: discount ? '50px' : '10px',
                         right: '10px',
-                        background: 'white',
+                        background: inWishlist ? 'var(--rose-gold)' : 'white',
                         border: 'none',
                         borderRadius: '50%',
                         width: '40px',
                         height: '40px',
                         fontSize: '18px',
                         cursor: 'pointer',
-                        boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+                        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                        transition: 'all 0.3s ease'
                     }}
                 >
-                    ❤️
+                    {inWishlist ? '❤️' : '🤍'}
                 </button>
             </div>
             <div className="card-body d-flex flex-column" style={{padding: '20px'}}>

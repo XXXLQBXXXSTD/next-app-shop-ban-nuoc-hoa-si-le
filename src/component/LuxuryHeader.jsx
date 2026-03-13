@@ -1,10 +1,11 @@
 "use client"
 import Link from 'next/link';
 import { useState } from 'react';
+import { useCart } from '@/context/CartContext';
 
-export default function LuxuryHeader({ cartCount = 0, wishlistCount = 0 }) {
+export default function LuxuryHeader() {
     const [searchQuery, setSearchQuery] = useState('');
-    const [showSearch, setShowSearch] = useState(false);
+    const { cartCount, wishlistCount } = useCart();
 
     return (
         <header className="sticky-top" style={{background: 'var(--cream-white)', boxShadow: '0 2px 10px rgba(0,0,0,0.05)'}}>
@@ -84,7 +85,10 @@ export default function LuxuryHeader({ cartCount = 0, wishlistCount = 0 }) {
                     </div>
                     
                     <div className="col-6 col-md-3 text-end">
-                        <button className="btn position-relative me-2" style={{border: 'none', background: 'transparent'}}>
+                        <Link href="/login" className="btn position-relative me-2" style={{border: 'none', background: 'transparent', fontSize: '14px', color: 'var(--emerald-green)', fontWeight: '500'}}>
+                            👤 Đăng nhập
+                        </Link>
+                        <Link href="/favorite" className="btn position-relative me-2" style={{border: 'none', background: 'transparent'}}>
                             <span style={{fontSize: '22px'}}>❤️</span>
                             {wishlistCount > 0 && (
                                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill" 
@@ -92,8 +96,8 @@ export default function LuxuryHeader({ cartCount = 0, wishlistCount = 0 }) {
                                     {wishlistCount}
                                 </span>
                             )}
-                        </button>
-                        <button className="btn position-relative" style={{border: 'none', background: 'transparent'}}>
+                        </Link>
+                        <Link href="/cart" className="btn position-relative" style={{border: 'none', background: 'transparent'}}>
                             <span style={{fontSize: '22px'}}>🛒</span>
                             {cartCount > 0 && (
                                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill" 
@@ -101,7 +105,7 @@ export default function LuxuryHeader({ cartCount = 0, wishlistCount = 0 }) {
                                     {cartCount}
                                 </span>
                             )}
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>

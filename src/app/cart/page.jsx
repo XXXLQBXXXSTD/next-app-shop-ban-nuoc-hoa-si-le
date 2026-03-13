@@ -1,48 +1,18 @@
 "use client"
 import { useState } from "react";
+import { useCart } from "@/context/CartContext";
 import LuxuryHeader from "@/component/LuxuryHeader";
 import LuxuryFooter from "@/component/LuxuryFooter";
 
 export default function CartPage() {
+  const { cartItems, removeFromCart, updateQuantity, getCartTotal } = useCart();
   const [currentStep, setCurrentStep] = useState(1);
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Signature Gold",
-      volume: "50ml",
-      type: "Eau de Parfum",
-      price: 1250000,
-      quantity: 1,
-      image: "https://fimgs.net/mdimg/perfume/375x500.42575.jpg"
-    },
-    {
-      id: 2,
-      name: "Velvet Rose",
-      volume: "200g",
-      type: "Soy Wax Candle",
-      price: 450000,
-      quantity: 1,
-      image: "https://fimgs.net/mdimg/perfume/375x500.7955.jpg"
-    }
-  ]);
-
   const [shippingFee, setShippingFee] = useState(35000);
   const [discount, setDiscount] = useState(0);
   const [couponCode, setCouponCode] = useState('');
   const [selectedPayment, setSelectedPayment] = useState('card');
 
-  const updateQuantity = (id, newQuantity) => {
-    if (newQuantity < 1) return;
-    setCartItems(cartItems.map(item => 
-      item.id === id ? {...item, quantity: newQuantity} : item
-    ));
-  };
-
-  const removeItem = (id) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
-  };
-
-  const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = getCartTotal();
   const total = subtotal + shippingFee - discount;
 
   const steps = [
@@ -54,7 +24,7 @@ export default function CartPage() {
 
   return (
     <>
-      <LuxuryHeader cartCount={cartItems.length} />
+      <LuxuryHeader />
       
       <main style={{maxWidth: '1200px', margin: '0 auto', padding: '40px 20px'}}>
         {/* Progress Steps */}
@@ -137,8 +107,38 @@ export default function CartPage() {
                 Giỏ hàng của bạn ({cartItems.length} sản phẩm)
               </h2>
 
-              <div style={{display: 'flex', flexDirection: 'column', gap: '20px'}}>
-                {cartItems.map((item) => (
+              {cartItems.length === 0 ? (
+                <div style={{
+                  textAlign: 'center',
+                  padding: '60px 20px'
+                }}>
+                  <div style={{fontSize: '80px', marginBottom: '20px'}}>🛒</div>
+                  <h3 style={{
+                    fontSize: '24px',
+                    fontWeight: '700',
+                    color: 'var(--emerald-green)',
+                    marginBottom: '15px'
+                  }}>
+                    Giỏ hàng trống
+                  </h3>
+                  <p style={{
+                    color: '#888',
+                    marginBottom: '30px',
+                    fontSize: '15px'
+                  }}>
+                    Hãy khám phá bộ sưu tập nước hoa cao cấp của chúng tôi
+                  </p>
+                  <a href="/shop" className="luxury-btn" style={{
+                    display: 'inline-block',
+                    padding: '15px 40px',
+                    textDecoration: 'none'
+                  }}>
+                    Khám phá ngay
+                  </a>
+                </div>
+              ) : (
+                <div style={{display: 'flex', flexDirection: 'column', gap: '20px'}}>
+                  {cartItems.map((item) => (
                   <div key={item.id} style={{
                     display: 'flex',
                     gap: '20px',
@@ -163,11 +163,11 @@ export default function CartPage() {
                             {item.name}
                           </h3>
                           <p style={{fontSize: '14px', color: '#888', margin: 0}}>
-                            {item.volume} | {item.type}
+                            {item.volume || '50ml'} {item.type ? `| ${item.type}` : ''}
                           </p>
                         </div>
                         <button 
-                          onClick={() => removeItem(item.id)}
+                          onClick={() => removeFromCart(item.id)}
                           style={{
                             border: 'none',
                             background: 'transparent',
@@ -246,6 +246,7 @@ export default function CartPage() {
                   </div>
                 ))}
               </div>
+              )}
             </section>
 
             {/* Shipping Calculator */}
@@ -609,6 +610,70 @@ export default function CartPage() {
             </div>
           </div>
         </div>
+
+        {/* Features Section */}
+        <section style={{padding: '60px 0', marginTop: '60px', background: 'rgba(10, 61, 42, 0.03)', borderRadius: '20px'}}>
+          <div className="container">
+            <div className="row text-center g-4">
+              <div className="col-6 col-md-3">
+                <div style={{padding: '20px'}}>
+                  <div style={{fontSize: '48px', marginBottom: '15px'}}>✓</div>
+                  <h6 style={{
+                    fontFamily: 'var(--font-heading)',
+                    color: 'var(--emerald-green)',
+                    marginBottom: '8px',
+                    fontSize: '18px'
+                  }}>
+                    Chính Hãng 100%
+                  </h6>
+                  <small style={{color: '#888'}}>Cam kết nguồn gốc rõ ràng</small>
+                </div>
+              </div>
+              <div className="col-6 col-md-3">
+                <div style={{padding: '20px'}}>
+                  <div style={{fontSize: '48px', marginBottom: '15px'}}>🚚</div>
+                  <h6 style={{
+                    fontFamily: 'var(--font-heading)',
+                    color: 'var(--emerald-green)',
+                    marginBottom: '8px',
+                    fontSize: '18px'
+                  }}>
+                    Miễn Phí Ship
+                  </h6>
+                  <small style={{color: '#888'}}>Đơn hàng từ 500.000đ</small>
+                </div>
+              </div>
+              <div className="col-6 col-md-3">
+                <div style={{padding: '20px'}}>
+                  <div style={{fontSize: '48px', marginBottom: '15px'}}>💰</div>
+                  <h6 style={{
+                    fontFamily: 'var(--font-heading)',
+                    color: 'var(--emerald-green)',
+                    marginBottom: '8px',
+                    fontSize: '18px'
+                  }}>
+                    Giá Sỉ Tốt Nhất
+                  </h6>
+                  <small style={{color: '#888'}}>Hỗ trợ đại lý toàn quốc</small>
+                </div>
+              </div>
+              <div className="col-6 col-md-3">
+                <div style={{padding: '20px'}}>
+                  <div style={{fontSize: '48px', marginBottom: '15px'}}>🔄</div>
+                  <h6 style={{
+                    fontFamily: 'var(--font-heading)',
+                    color: 'var(--emerald-green)',
+                    marginBottom: '8px',
+                    fontSize: '18px'
+                  }}>
+                    Đổi Trả 7 Ngày
+                  </h6>
+                  <small style={{color: '#888'}}>Nếu có lỗi sản xuất</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <LuxuryFooter />

@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --cream-white: #F8F4F0;
   --emerald-green: #0A3D2A;
@@ -129,4 +133,53 @@ a {
     transform: translateY(-100px) translateX(20px);
     opacity: 1;
   }
+}
+
+/* Custom Scrollbar for Admin Dashboard */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(10, 61, 43, 0.1);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.3);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.5);
+}
+
+/* Dark theme styles */
+.dark {
+  color-scheme: dark;
+}
+
+/* Admin Dashboard specific styles */
+.sidebar-active {
+  background: rgba(212, 175, 55, 0.15);
+  border-right: 4px solid #D4AF37;
+  color: #D4AF37;
+}
+
+/* Admin Login Page Styles */
+.gold-glow:hover {
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4) !important;
+}
+
+.perfume-bg {
+  background: linear-gradient(to bottom, rgba(10, 61, 43, 0.8), rgba(10, 26, 20, 0.95)), 
+              url('https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.mist-overlay {
+  background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 70%) !important;
 }

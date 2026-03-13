@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+import { useCart } from "@/context/CartContext";
 import ProductItem from "@/component/ProductItem";
 import LuxuryHeader from "@/component/LuxuryHeader";
 import LuxuryFooter from "@/component/LuxuryFooter";
@@ -7,11 +7,10 @@ import HeroSection from "@/component/HeroSection";
 import ScentFamilies from "@/component/ScentFamilies";
 
 export default function Home() {
-  const [cartCount, setCartCount] = useState(0);
-  const [wishlistCount, setWishlistCount] = useState(0);
+  const { addToCart } = useCart();
   
-  const handleAddToCart = () => {
-    setCartCount(cartCount + 1);
+  const handleAddToCart = (product) => {
+    addToCart(product);
   }
 
   const featuredProducts = [
@@ -88,70 +87,273 @@ export default function Home() {
 
   return (
     <>
-      <LuxuryHeader cartCount={cartCount} wishlistCount={wishlistCount} />
+      <LuxuryHeader />
       
       <HeroSection />
 
-      {/* Features Section */}
-      <section style={{padding: '60px 0', background: 'white'}}>
+      {/* Seasonal Collections Section */}
+      <section style={{padding: '80px 0', background: 'rgba(10, 61, 42, 0.03)'}}>
         <div className="container">
-          <div className="row text-center g-4">
-            <div className="col-6 col-md-3">
-              <div style={{padding: '20px'}}>
-                <div style={{fontSize: '48px', marginBottom: '15px'}}>✓</div>
-                <h6 style={{
-                  fontFamily: 'var(--font-heading)',
-                  color: 'var(--emerald-green)',
-                  marginBottom: '8px',
-                  fontSize: '18px'
+          <div className="text-center mb-5">
+            <p style={{
+              color: 'var(--soft-gold)',
+              fontSize: '14px',
+              letterSpacing: '3px',
+              fontWeight: '500',
+              marginBottom: '10px'
+            }}>
+              BỘ SƯU TẬP ĐẶC BIỆT
+            </p>
+            <h2 style={{
+              fontFamily: 'var(--font-heading)',
+              fontSize: 'clamp(32px, 5vw, 48px)',
+              color: 'var(--emerald-green)',
+              marginBottom: '15px'
+            }}>
+              Khám Phá Theo Mùa
+            </h2>
+            <div className="gold-divider"></div>
+            <p style={{color: '#888', maxWidth: '700px', margin: '20px auto 0', fontSize: '15px'}}>
+              Mỗi mùa mang một câu chuyện riêng, một hương thơm đặc trưng
+            </p>
+          </div>
+
+          <div className="row g-4">
+            {/* Spring */}
+            <div className="col-md-6 col-lg-3">
+              <a href="/collections/spring" style={{textDecoration: 'none'}}>
+                <div className="hover-scale" style={{
+                  position: 'relative',
+                  height: '400px',
+                  borderRadius: '15px',
+                  overflow: 'hidden',
+                  cursor: 'pointer',
+                  boxShadow: '0 5px 20px rgba(0,0,0,0.1)'
                 }}>
-                  Chính Hãng 100%
-                </h6>
-                <small style={{color: '#888'}}>Cam kết nguồn gốc rõ ràng</small>
-              </div>
+                  <img 
+                    src="https://fimgs.net/mdimg/perfume/375x500.7955.jpg"
+                    alt="Mùa Xuân"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.5s ease'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to top, rgba(255, 182, 193, 0.9), transparent)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end',
+                    padding: '25px'
+                  }}>
+                    <span style={{
+                      fontSize: '40px',
+                      marginBottom: '10px'
+                    }}>🌸</span>
+                    <h3 style={{
+                      fontFamily: 'var(--font-heading)',
+                      fontSize: '28px',
+                      fontWeight: '700',
+                      color: 'white',
+                      marginBottom: '8px'
+                    }}>
+                      Mùa Xuân
+                    </h3>
+                    <p style={{
+                      color: 'rgba(255,255,255,0.95)',
+                      fontSize: '13px',
+                      margin: 0
+                    }}>
+                      Hương hoa cỏ tươi mới
+                    </p>
+                  </div>
+                </div>
+              </a>
             </div>
-            <div className="col-6 col-md-3">
-              <div style={{padding: '20px'}}>
-                <div style={{fontSize: '48px', marginBottom: '15px'}}>🚚</div>
-                <h6 style={{
-                  fontFamily: 'var(--font-heading)',
-                  color: 'var(--emerald-green)',
-                  marginBottom: '8px',
-                  fontSize: '18px'
+
+            {/* Summer */}
+            <div className="col-md-6 col-lg-3">
+              <a href="/collections/summer" style={{textDecoration: 'none'}}>
+                <div className="hover-scale" style={{
+                  position: 'relative',
+                  height: '400px',
+                  borderRadius: '15px',
+                  overflow: 'hidden',
+                  cursor: 'pointer',
+                  boxShadow: '0 5px 20px rgba(0,0,0,0.1)'
                 }}>
-                  Miễn Phí Ship
-                </h6>
-                <small style={{color: '#888'}}>Đơn hàng từ 500.000đ</small>
-              </div>
+                  <img 
+                    src="https://fimgs.net/mdimg/perfume/375x500.41675.jpg"
+                    alt="Mùa Hạ"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.5s ease'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to top, rgba(255, 165, 0, 0.9), transparent)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end',
+                    padding: '25px'
+                  }}>
+                    <span style={{
+                      fontSize: '40px',
+                      marginBottom: '10px'
+                    }}>☀️</span>
+                    <h3 style={{
+                      fontFamily: 'var(--font-heading)',
+                      fontSize: '28px',
+                      fontWeight: '700',
+                      color: 'white',
+                      marginBottom: '8px'
+                    }}>
+                      Mùa Hạ
+                    </h3>
+                    <p style={{
+                      color: 'rgba(255,255,255,0.95)',
+                      fontSize: '13px',
+                      margin: 0
+                    }}>
+                      Cam chanh & Biển cả
+                    </p>
+                  </div>
+                </div>
+              </a>
             </div>
-            <div className="col-6 col-md-3">
-              <div style={{padding: '20px'}}>
-                <div style={{fontSize: '48px', marginBottom: '15px'}}>💰</div>
-                <h6 style={{
-                  fontFamily: 'var(--font-heading)',
-                  color: 'var(--emerald-green)',
-                  marginBottom: '8px',
-                  fontSize: '18px'
+
+            {/* Autumn */}
+            <div className="col-md-6 col-lg-3">
+              <a href="/collections/autumn" style={{textDecoration: 'none'}}>
+                <div className="hover-scale" style={{
+                  position: 'relative',
+                  height: '400px',
+                  borderRadius: '15px',
+                  overflow: 'hidden',
+                  cursor: 'pointer',
+                  boxShadow: '0 5px 20px rgba(0,0,0,0.1)'
                 }}>
-                  Giá Sỉ Tốt Nhất
-                </h6>
-                <small style={{color: '#888'}}>Hỗ trợ đại lý toàn quốc</small>
-              </div>
+                  <img 
+                    src="https://fimgs.net/mdimg/perfume/375x500.14365.jpg"
+                    alt="Mùa Thu"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.5s ease'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to top, rgba(210, 105, 30, 0.9), transparent)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end',
+                    padding: '25px'
+                  }}>
+                    <span style={{
+                      fontSize: '40px',
+                      marginBottom: '10px'
+                    }}>🍂</span>
+                    <h3 style={{
+                      fontFamily: 'var(--font-heading)',
+                      fontSize: '28px',
+                      fontWeight: '700',
+                      color: 'white',
+                      marginBottom: '8px'
+                    }}>
+                      Mùa Thu
+                    </h3>
+                    <p style={{
+                      color: 'rgba(255,255,255,0.95)',
+                      fontSize: '13px',
+                      margin: 0
+                    }}>
+                      Gỗ & Hổ phách ấm áp
+                    </p>
+                  </div>
+                </div>
+              </a>
             </div>
-            <div className="col-6 col-md-3">
-              <div style={{padding: '20px'}}>
-                <div style={{fontSize: '48px', marginBottom: '15px'}}>🔄</div>
-                <h6 style={{
-                  fontFamily: 'var(--font-heading)',
-                  color: 'var(--emerald-green)',
-                  marginBottom: '8px',
-                  fontSize: '18px'
+
+            {/* Winter */}
+            <div className="col-md-6 col-lg-3">
+              <a href="/collections/winter" style={{textDecoration: 'none'}}>
+                <div className="hover-scale" style={{
+                  position: 'relative',
+                  height: '400px',
+                  borderRadius: '15px',
+                  overflow: 'hidden',
+                  cursor: 'pointer',
+                  boxShadow: '0 5px 20px rgba(0,0,0,0.1)'
                 }}>
-                  Đổi Trả 7 Ngày
-                </h6>
-                <small style={{color: '#888'}}>Nếu có lỗi sản xuất</small>
-              </div>
+                  <img 
+                    src="https://fimgs.net/mdimg/perfume/375x500.73669.jpg"
+                    alt="Mùa Đông"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.5s ease'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to top, rgba(70, 130, 180, 0.9), transparent)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end',
+                    padding: '25px'
+                  }}>
+                    <span style={{
+                      fontSize: '40px',
+                      marginBottom: '10px'
+                    }}>❄️</span>
+                    <h3 style={{
+                      fontFamily: 'var(--font-heading)',
+                      fontSize: '28px',
+                      fontWeight: '700',
+                      color: 'white',
+                      marginBottom: '8px'
+                    }}>
+                      Mùa Đông
+                    </h3>
+                    <p style={{
+                      color: 'rgba(255,255,255,0.95)',
+                      fontSize: '13px',
+                      margin: 0
+                    }}>
+                      Gia vị & Trầm hương
+                    </p>
+                  </div>
+                </div>
+              </a>
             </div>
+          </div>
+
+          <div className="text-center mt-5">
+            <a href="/collections">
+              <button className="luxury-btn-outline">
+                XEM TẤT CẢ BỘ SƯU TẬP
+              </button>
+            </a>
           </div>
         </div>
       </section>
@@ -186,13 +388,14 @@ export default function Home() {
             {featuredProducts.map((product) => (
               <div key={product.id} className="col-6 col-md-4 col-lg-3">
                 <ProductItem 
+                  id={product.id}
                   name={product.name}
                   price={product.price}
                   brand={product.brand}
                   discount={product.discount}
                   volume={product.volume}
                   image={product.image}
-                  onAdd={handleAddToCart}
+                  onAdd={() => handleAddToCart(product)}
                 />
               </div>
             ))}

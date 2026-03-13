@@ -1,15 +1,17 @@
 "use client"
 import { useState } from "react";
+import { useCart } from "@/context/CartContext";
 import LuxuryHeader from "@/component/LuxuryHeader";
 import LuxuryFooter from "@/component/LuxuryFooter";
 
 export default function ProductDetailPage() {
-  const [cartCount, setCartCount] = useState(0);
+  const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const [showWholesale, setShowWholesale] = useState(false);
 
   const product = {
+    id: 'elite-royal-oud',
     name: "Elite Royal Oud",
     brand: "Parfum de Prestige",
     price: 4500000,
@@ -61,7 +63,7 @@ export default function ProductDetailPage() {
 
   return (
     <>
-      <LuxuryHeader cartCount={cartCount} />
+      <LuxuryHeader />
       
       <main style={{maxWidth: '1400px', margin: '0 auto', padding: '40px 20px'}}>
         {/* Breadcrumb */}
@@ -305,7 +307,19 @@ export default function ProductDetailPage() {
 
                 {/* Add to Cart */}
                 <button 
-                  onClick={() => setCartCount(cartCount + quantity)}
+                  onClick={() => {
+                    for (let i = 0; i < quantity; i++) {
+                      addToCart({
+                        id: product.id,
+                        name: product.name,
+                        price: product.salePrice,
+                        brand: product.brand,
+                        volume: '50ml',
+                        type: 'EDP',
+                        image: product.images[0]
+                      });
+                    }
+                  }}
                   className="luxury-btn"
                   style={{
                     flex: 1,
