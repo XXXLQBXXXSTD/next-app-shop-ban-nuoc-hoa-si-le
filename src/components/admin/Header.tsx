@@ -8,9 +8,7 @@ export default function AdminHeader() {
 
   useEffect(() => {
     const userData = localStorage.getItem('admin_user');
-    if (userData) {
-      setUser(JSON.parse(userData));
-    }
+    if (userData) setUser(JSON.parse(userData));
   }, []);
 
   const handleLogout = () => {
@@ -20,61 +18,85 @@ export default function AdminHeader() {
   };
 
   return (
-    <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap"
-        rel="stylesheet"
-      />
-      
-      <header className="bg-white backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 px-10 py-4 flex items-center justify-between">
-        <div>
-          <h2 className="text-xl font-serif font-bold text-slate-900">Tổng quan Dashboard</h2>
+    <header style={{
+      background: '#fff',
+      borderBottom: '1px solid #e2e8f0',
+      position: 'sticky',
+      top: 0,
+      zIndex: 50,
+      padding: '16px 40px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    }}>
+      <h2 style={{
+        fontFamily: 'Playfair Display, serif',
+        fontSize: '20px',
+        fontWeight: '700',
+        color: '#0f172a',
+        margin: 0,
+      }}>Tổng quan Dashboard</h2>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+        {/* Search */}
+        <div style={{ position: 'relative' }}>
+          <span className="material-symbols-outlined" style={{
+            position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)',
+            color: '#94a3b8', fontSize: '18px',
+          }}>search</span>
+          <input
+            style={{
+              paddingLeft: '40px', paddingRight: '16px', paddingTop: '8px', paddingBottom: '8px',
+              background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '8px',
+              width: '260px', fontSize: '14px', color: '#0f172a', outline: 'none',
+            }}
+            placeholder="Tìm kiếm đơn hàng, khách hàng..."
+            type="text"
+            onFocus={(e) => e.target.style.borderColor = '#D4AF37'}
+            onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
+          />
         </div>
 
-        <div className="flex items-center gap-8">
-          {/* Search Bar */}
-          <div className="relative group">
-            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#D4AF37] transition-colors">
-              search
-            </span>
-            <input
-              className="pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-1 focus:ring-[#D4AF37] focus:border-[#D4AF37] w-64 text-sm transition-all outline-none text-slate-900 placeholder:text-slate-400"
-              placeholder="Tìm kiếm đơn hàng, khách hàng..."
-              type="text"
-            />
-          </div>
+        {/* Right side */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', borderLeft: '1px solid #e2e8f0', paddingLeft: '32px' }}>
+          {/* Bell */}
+          <button style={{ position: 'relative', background: 'none', border: 'none', cursor: 'pointer', padding: '8px', color: '#64748b' }}>
+            <span className="material-symbols-outlined">notifications</span>
+            <span style={{
+              position: 'absolute', top: '8px', right: '8px',
+              width: '8px', height: '8px', background: '#ef4444',
+              borderRadius: '50%', border: '2px solid #fff',
+            }}></span>
+          </button>
 
-          {/* User Info */}
-          <div className="flex items-center gap-4 border-l border-slate-200 pl-8">
-            <button className="relative p-2 text-slate-500 hover:text-[#D4AF37] transition-colors">
-              <span className="material-symbols-outlined">notifications</span>
-              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-            </button>
-
-            <div className="flex items-center gap-3">
-              <div className="text-right">
-                <p className="text-sm font-bold text-slate-900">
-                  {user?.name || 'Admin Luxe'}
-                </p>
-                <p className="text-[10px] text-slate-400 uppercase tracking-widest">Manager</p>
+          {/* User */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontSize: '14px', fontWeight: '700', color: '#0f172a' }}>
+                {user?.name || 'Admin Luxe'}
               </div>
-              <div className="w-10 h-10 rounded-full border-2 border-[#D4AF37] p-0.5">
-                <img
-                  alt="Profile"
-                  className="w-full h-full rounded-full object-cover"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuByzfItdv_1bo4af9U6gMnvEAR_jq00UXuLmClCHehz-l21ppdXbhCvV_OnrQm41mAstnIfYHhp5UPx2QdPAucDr6cXBgzo4F5EspWiKqqT_6DboFHig8FRQrt2XE8R3VW2bbEaq9_NJ2S-nTLJ_EHlVqgIaclQOVpPaoepd4lys5W30qfxeejvKD8xWCOW4cED6CWcy5ASAXe3Iaov0zTSBSS-sngT6-0qKiMUmSgnH5QVif4he9cEDqUaNd09SZiklHLiQhNw73E"
-                />
+              <div style={{ fontSize: '10px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                Manager
               </div>
-              <button
-                onClick={handleLogout}
-                className="ml-2 p-2 text-slate-500 hover:text-red-500 transition-colors"
-                title="Đăng xuất">
-                <span className="material-symbols-outlined text-lg">logout</span>
-              </button>
             </div>
+            <div style={{ width: '40px', height: '40px', borderRadius: '50%', border: '2px solid #D4AF37', padding: '2px' }}>
+              <img
+                alt="Profile"
+                style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }}
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuByzfItdv_1bo4af9U6gMnvEAR_jq00UXuLmClCHehz-l21ppdXbhCvV_OnrQm41mAstnIfYHhp5UPx2QdPAucDr6cXBgzo4F5EspWiKqqT_6DboFHig8FRQrt2XE8R3VW2bbEaq9_NJ2S-nTLJ_EHlVqgIaclQOVpPaoepd4lys5W30qfxeejvKD8xWCOW4cED6CWcy5ASAXe3Iaov0zTSBSS-sngT6-0qKiMUmSgnH5QVif4he9cEDqUaNd09SZiklHLiQhNw73E"
+              />
+            </div>
+            <button
+              onClick={handleLogout}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', color: '#94a3b8' }}
+              title="Đăng xuất"
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#ef4444')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#94a3b8')}>
+              <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>logout</span>
+            </button>
           </div>
         </div>
-      </header>
-    </>
+      </div>
+    </header>
   );
 }
